@@ -128,5 +128,13 @@ class SimpleArrayListTest {
 		list.add(0);
 		assertThrows(ConcurrentModificationException.class, () -> iterator.next());
 	}
+	
+	@Test
+	void whenArryIsZeroLengthThenIncreaseCapacity() {
+		list = new SimpleArrayList<>(0);
+		assertEquals(0, list.size());
+		IntStream.range(1, 4).forEach(v -> list.add(v));
+		assertEquals(3, list.size());
+	}
 
 }
