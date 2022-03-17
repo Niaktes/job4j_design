@@ -39,4 +39,34 @@ class ForwardLinkedTest {
 		assertEquals(2, it.next());
 	}
 	
+	@Test
+	void whenAddThenIter() {
+		linked.add(1);
+		linked.add(2);
+		Iterator<Integer> it = linked.iterator();
+		assertEquals(1, it.next());
+		assertEquals(2, it.next());
+	}
+	
+	@Test
+	void whenAddAndRevertThenIter() {
+		linked.add(1);
+		linked.add(2);
+		linked.revert();
+		Iterator<Integer> it = linked.iterator();
+		assertEquals(2, it.next());
+		assertEquals(1, it.next());
+	}
+	
+	@Test
+	void whenSize0ThenReturnFalse() {
+		assertFalse(linked.revert());
+	}
+	
+	@Test
+	void whenSize1ThenReturnFalse() {
+		linked.add(1);
+		assertFalse(linked.revert());
+	}
+	
 }
