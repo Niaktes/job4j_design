@@ -71,7 +71,7 @@ public class SimpleArrayList<T> implements List<T> {
 				if (expectedModCount != modCount) {
 					throw new ConcurrentModificationException();
 				}
-				return index < container.length && container[index] != null;
+				return index < size;
 			}
 
 			@Override
@@ -86,7 +86,7 @@ public class SimpleArrayList<T> implements List<T> {
 	
 	private void increaseCapacity() {
 		if (container.length == 0) {
-			container = Arrays.copyOf(container, 1);
+			container = Arrays.copyOf(container, 2);
 		} else {
 			container = Arrays.copyOf(container, container.length * 2);
 		}
