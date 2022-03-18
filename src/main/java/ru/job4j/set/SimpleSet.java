@@ -1,8 +1,6 @@
 package ru.job4j.set;
 
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import ru.job4j.collection.SimpleArrayList;
@@ -37,27 +35,7 @@ public class SimpleSet<T> implements Set<T> {
 	
 	@Override
 	public Iterator<T> iterator() {
-		return new Iterator<T>() {
-			
-			private final int expectedModCount = modCount;
-			private int index = 0;
-
-			@Override
-			public boolean hasNext() {
-				if (expectedModCount != modCount) {
-					throw new ConcurrentModificationException();
-				}
-				return index < size;
-			}
-
-			@Override
-			public T next() {
-				if (!hasNext()) {
-					throw new NoSuchElementException();
-				}
-				return set.get(index++);
-			}
-		};
+		return set.iterator(); 
 	}
 
 }
