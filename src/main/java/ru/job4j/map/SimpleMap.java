@@ -15,12 +15,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
 	
 	@Override
 	public boolean put(K key, V value) {
+		if (((float) count / capacity) >= LOAD_FACTOR) {
+			expand();
+		}
 		int index = indexFor(hash(key.hashCode()));
 		boolean slotIsEmpty = table[index] == null;
 		if (slotIsEmpty) {
-			if (count / capacity >= LOAD_FACTOR) {
-				expand();
-			}
 			table[index] = new MapEntry<>(key, value);
 			count++;
 			modCount++;
@@ -31,19 +31,19 @@ public class SimpleMap<K, V> implements Map<K, V> {
 	@Override
 	public V get(K key) {
 		int index = indexFor(hash(key.hashCode()));
-		return (table[index] != null) ? table[index].value : null;
+		return (table[index] != null && table[index].key.equals(key)) ? table[index].value : null;
 	}
 	
 	@Override
 	public boolean remove(K key) {
 		int index = indexFor(hash(key.hashCode()));
-		boolean entryExists = table[index] != null;
-		if (entryExists) {
+		boolean keyEqual = table[index] != null && table[index].key.equals(key);
+		if (keyEqual) {
 			table[index] = null;
 			count--;
 			modCount++;
 		}
-		return entryExists;
+		return keyEqual;
 	}
 	
 	@Override
@@ -92,8 +92,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
 		capacity = capacity * 2;
 		MapEntry<K, V>[] newTable = new MapEntry[capacity];
 		for (MapEntry<K, V> entrySet : table) {
-			int index = indexFor(hash(entrySet.key.hashCode()));
-			newTable[index] = entrySet;
+			if (entrySet != null) {
+				int index = indexFor(hash(entrySet.key.hashCode()));
+				newTable[index] = entrySet;	
+			}
 		}
 		table = newTable;
 	}
