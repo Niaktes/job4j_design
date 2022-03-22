@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class SimpleTreeTest {
 	
-	Tree<Integer> tree;
+	SimpleTree<Integer> tree;
 
 	@BeforeEach
 	void init() {
@@ -45,6 +45,37 @@ class SimpleTreeTest {
 		tree.add(1, 2);
 		tree.add(2, 3);
 		assertFalse(tree.add(4, 5));
+	}
+	
+	@Test
+	void whenLessThan2ChildrenThenIsBinaryTrue() {
+		tree.add(1, 2);
+		tree.add(1, 3);
+		tree.add(2, 4);
+		tree.add(2, 5);
+		tree.add(3, 6);
+		tree.add(3, 7);
+		tree.add(5, 8);
+		tree.add(5, 9);
+		tree.add(9, 10);
+		assertTrue(tree.isBinary());
+	}
+	
+	@Test
+	void whenMoreThan2ChildrenThenIsBinaryFalse() {
+		tree.add(1, 2);
+		tree.add(1, 3);
+		tree.add(2, 4);
+		tree.add(2, 5);
+		tree.add(2, 6);
+		tree.add(3, 7);
+		tree.add(3, 8);
+		assertFalse(tree.isBinary());
+	}
+	
+	@Test
+	void whenEmptyTreeThenIsBinaryTrue() {
+		assertTrue(tree.isBinary());
 	}
 
 }
