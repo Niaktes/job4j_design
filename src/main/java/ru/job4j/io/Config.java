@@ -20,11 +20,11 @@ public class Config {
 		try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
 			read.lines()
 				.filter(s -> !s.startsWith("#") && !s.isBlank())
-				.map(s -> s.split("="))
+				.map(s -> s.split("=", 2))
 				.forEach(s -> {
 					if (s.length != 2) {
 						throw new IllegalArgumentException();
-					} else {
+					} else if (!s[0].isBlank() && !s[1].isBlank()) {
 						values.put(s[0], s[1]);
 					}
 				});
