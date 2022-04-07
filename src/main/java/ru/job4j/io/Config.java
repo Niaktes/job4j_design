@@ -22,11 +22,10 @@ public class Config {
 				.filter(s -> !s.startsWith("#") && !s.isBlank())
 				.map(s -> s.split("=", 2))
 				.forEach(s -> {
-					if (s.length == 2 && !s[0].isBlank() && !s[1].isBlank()) {
-						values.put(s[0], s[1]);
-					} else {
+					if (s.length != 2 || s[0].isBlank() || s[1].isBlank()) {
 						throw new IllegalArgumentException("Pattern of properties are incorrect. Please, check your properties file.");
 					}
+					values.put(s[0], s[1]);
 				});
 		} catch (IOException e) {
 			e.printStackTrace();
