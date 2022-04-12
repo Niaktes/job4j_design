@@ -17,16 +17,24 @@ public class ArgsName {
 	private void parse(String[] args) {
 		for (String argument : args) {
 			String[] pair = argument.split("=", 2);
-			String key = pair[0].substring(1);
-			String value = pair[1];
-			if (key.isBlank() || value.isBlank()) {
-				throw new IllegalArgumentException("Invalid argument.");
+			argumentsValidation(pair);
+			if (pair[0].startsWith("-")) {
+				pair[0] = pair[0].substring(1);
 			}
-			values.put(key, value);			
+			values.put(pair[0], pair[1]);			
+		}
+	}
+	
+	private static void argumentsValidation(String[] pair) {
+		if (pair.length != 2 || pair[0].isBlank() || pair[1].isBlank()) {
+			throw new IllegalArgumentException("Invalid argument!");
 		}
 	}
 	
 	public static ArgsName of(String[] args) {
+		if (args.length == 0) {
+			throw new IllegalArgumentException("No arguments has been added.");
+		}
 		ArgsName names = new ArgsName();
 		names.parse(args);
 		return names;

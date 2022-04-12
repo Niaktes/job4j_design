@@ -25,6 +25,12 @@ class ArgsNameTest {
 	}
 	
 	@Test
+	void whenNoHyphenSymbol() {
+		ArgsName jvm = ArgsName.of(new String[] {"Xmx=512"});
+		assertEquals("512", jvm.get("Xmx"));
+	}
+	
+	@Test
 	void whenGetNotExists() {
 		ArgsName jvm = ArgsName.of(new String[] {"-Xmx=512"});
 		assertThrows(IllegalArgumentException.class, () -> jvm.get("Xms"));
@@ -33,6 +39,21 @@ class ArgsNameTest {
 	@Test
 	void whenWrongSomeArgument() {
 		assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[] {"-encoding=UTF-8", "-Xmx="}));
+	}
+	
+	@Test
+	void whenNoKeyInArgumen() {
+		assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[] {"=512"}));
+	}
+	
+	@Test
+	void whenNoKeyAndValue() {
+		assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[] {"="}));
+	}
+	
+	@Test
+	void whenNoEqualsSymbol() {
+		assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[] {"-encodingUTF-8"}));
 	}
 
 }
