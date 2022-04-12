@@ -26,8 +26,7 @@ class ArgsNameTest {
 	
 	@Test
 	void whenNoHyphenSymbol() {
-		ArgsName jvm = ArgsName.of(new String[] {"Xmx=512"});
-		assertEquals("512", jvm.get("Xmx"));
+		assertThrows(IllegalArgumentException.class, () -> ArgsName.of(new String[] {"Xmx=512"}));
 	}
 	
 	@Test

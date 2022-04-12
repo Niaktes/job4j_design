@@ -18,16 +18,16 @@ public class ArgsName {
 		for (String argument : args) {
 			String[] pair = argument.split("=", 2);
 			argumentsValidation(pair);
-			if (pair[0].startsWith("-")) {
-				pair[0] = pair[0].substring(1);
-			}
-			values.put(pair[0], pair[1]);			
+			values.put(pair[0].substring(1), pair[1]);			
 		}
 	}
 	
 	private static void argumentsValidation(String[] pair) {
 		if (pair.length != 2 || pair[0].isBlank() || pair[1].isBlank()) {
-			throw new IllegalArgumentException("Invalid argument!");
+			throw new IllegalArgumentException("Invalid argument! Key or value of argument is missing.");
+		}
+		if (!pair[0].startsWith("-")) {
+			throw new IllegalArgumentException("Invalid argument! Please use next pattern: \"-key=value\"");
 		}
 	}
 	
