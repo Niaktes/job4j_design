@@ -34,11 +34,14 @@ public class Zip {
 	}
 	
 	private static void argumentsValidation(Path directory, String exclude, File archive) {
-		if (directory == null || exclude == null || archive == null) {
-			throw new IllegalArgumentException("Some argument is missing. Please use next pattern: \"-d=directory -e=extension -o=output\".");
-		}
 		if (!directory.toFile().exists() || !directory.toFile().isDirectory()) {
-			throw new IllegalArgumentException("Invalid argument! -d - is not a directory.");
+			throw new IllegalArgumentException("Invalid argument! -d argument - is not a directory.");
+		}
+		if (!exclude.startsWith(".")) {
+			throw new IllegalArgumentException("Invalid argument! -e argument must start with \".\".");
+		}
+		if (!archive.getName().endsWith(".zip")) {
+			throw new IllegalArgumentException("Invalid argument! -o argument extension must be \".zip\".");
 		}
 	}
 	
@@ -55,6 +58,9 @@ public class Zip {
 	}
 
 	public static void main(String[] args) {
+		if (args.length != 3) {
+			throw new IllegalArgumentException("Invalid arguments! Please use next pattern: \"-d=directory -e=extension -o=output\".");
+		}
 		ArgsName arguments = ArgsName.of(args);
 		Path directory = Path.of(arguments.get("d"));
 		String exclude = arguments.get("e");
