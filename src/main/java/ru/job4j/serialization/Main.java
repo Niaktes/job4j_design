@@ -28,6 +28,14 @@ public class Main {
                         + "}";
         final Person personMod = gson.fromJson(personJson, Person.class);
         System.out.println(personMod);
+
+
+        final Cat cat = new Cat(true, 4, "sleep", new Preserves("tuna", 80), new String[] {"MEOW!", "purr"});
+        System.out.println(cat);
+        String recordedCat = gson.toJson(cat);
+        System.out.println(recordedCat);
+        final Cat readedCat = gson.fromJson(recordedCat, Cat.class);
+        System.out.println(readedCat);
     }
 
 }
