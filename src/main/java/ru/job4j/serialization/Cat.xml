@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<cat hunger="true" legs="4">
-    <action>"sleep"</action>
+<cat hungry="true" legsNumber="4">
+    <hobby>sleep</hobby>
     <preserves content="tuna" mass="80"/>
     <voices>
-        <voice>"MEOW!"</voice>
-        <voice>"purr"</voice>
+        <voice>MEOW!</voice>
+        <voice>purr</voice>
     </voices>
 </cat>
