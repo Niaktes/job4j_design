@@ -1,9 +1,21 @@
 package ru.job4j.serialization;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "preserve")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Preserves {
 
-    private final String content;
-    private final int mass;
+    private String content;
+    @XmlAttribute
+    private int mass;
+
+    public Preserves() {
+
+    }
 
     public Preserves(String content, int mass) {
         this.content = content;

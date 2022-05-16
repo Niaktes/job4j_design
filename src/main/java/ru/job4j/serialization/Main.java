@@ -3,17 +3,48 @@ package ru.job4j.serialization;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import java.io.StringReader;
+import java.io.StringWriter;
+
 public class Main {
 
-    public static void main(String[] args) {
-        final Person person = new Person(false, 30, new Contact(123456, "8(800)555-35-35"),
-                new String[] {"Worker", "Married"});
+    public static void main(String[] args) throws Exception {
+        Cat cat = new Cat(true, 4, "sleep", new Preserves("tuna", 80), "MEOW!", "purr");
+        /* Получаем контекст для доступа к АПИ */
+        JAXBContext context = JAXBContext.newInstance(Cat.class);
+        /* Создаем сериализатор */
+        Marshaller marshaller = context.createMarshaller();
+        /* Указываем, что нам нужно форматирование */
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String xmlCat = "";
 
-        /* Преобразуем объект person в json-строку. */
+        try (StringWriter writer = new StringWriter()) {
+            /* Сериализуем */
+            marshaller.marshal(cat, writer);
+            xmlCat = writer.getBuffer().toString();
+            System.out.println(xmlCat);
+        }
+        /* Для десериализации нам нужно создать десериализатор */
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(xmlCat)) {
+            /* Десериализуем */
+            Cat resultCat = (Cat) unmarshaller.unmarshal(reader);
+            System.out.println(resultCat);
+        }
+        System.out.println();
+
+
+
+        /* Сериализация в JSON
+        Person person = new Person(false, 30, new Contact(123456, "11-111"), "Worked", "Married");
+        Преобразуем объект person в json-строку.
         final Gson gson = new GsonBuilder().create();
         System.out.println(gson.toJson(person));
 
-        /* Модифицируем json-строку */
+        Модифицируем json-строку
         final String personJson =
                 "{"
                         + "\"sex\":false,"
@@ -36,6 +67,7 @@ public class Main {
         System.out.println(recordedCat);
         final Cat readedCat = gson.fromJson(recordedCat, Cat.class);
         System.out.println(readedCat);
+        */
     }
 
 }

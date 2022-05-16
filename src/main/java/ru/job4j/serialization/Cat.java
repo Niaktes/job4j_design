@@ -1,21 +1,33 @@
 package ru.job4j.serialization;
 
+import javax.xml.bind.annotation.*;
 import java.util.Arrays;
 
+@XmlRootElement(name = "cat")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Cat {
 
-    private final boolean hungry;
-    private final int legsNumber;
-    private final String hobby;
-    private final Preserves preserves;
-    private final String[] voice;
+    @XmlAttribute
+    private boolean hungry;
+    @XmlAttribute
+    private int legsNumber;
+    @XmlAttribute
+    private String hobby;
+    private Preserves preserves;
+    @XmlElementWrapper(name = "voices")
+    @XmlElement(name = "voice")
+    private String[] voices;
 
-    public Cat(boolean hunger, int legs, String action, Preserves preserves, String[] phrases) {
+    public Cat() {
+
+    }
+
+    public Cat(boolean hunger, int legs, String action, Preserves preserves, String... phrases) {
         this.hungry = hunger;
         this.legsNumber = legs;
         this.hobby = action;
         this.preserves = preserves;
-        this.voice = phrases;
+        this.voices = phrases;
     }
 
     public boolean isHungry() {
@@ -35,7 +47,7 @@ public class Cat {
     }
 
     public String[] getVoice() {
-        return voice;
+        return voices;
     }
 
     @Override
@@ -60,7 +72,7 @@ public class Cat {
             return false;
         }
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.equals(voice, cat.voice);
+        return Arrays.equals(voices, cat.voices);
     }
 
     @Override
@@ -69,7 +81,7 @@ public class Cat {
         result = 31 * result + legsNumber;
         result = 31 * result + hobby.hashCode();
         result = 31 * result + preserves.hashCode();
-        result = 31 * result + Arrays.hashCode(voice);
+        result = 31 * result + Arrays.hashCode(voices);
         return result;
     }
 
@@ -80,7 +92,7 @@ public class Cat {
                 + ", legsNumber=" + legsNumber
                 + ", hobby='" + hobby + '\''
                 + ", preserves=" + preserves
-                + ", voice=" + Arrays.toString(voice)
+                + ", voice=" + Arrays.toString(voices)
                 + '}';
     }
 }
