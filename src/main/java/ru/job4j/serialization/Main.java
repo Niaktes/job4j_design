@@ -16,17 +16,22 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        /* Варианты получения json-объектов */
-        /* JSONObject из json-строки */
+        Cat cat = new Cat(true, 4, "sleep", new Preserves("tuna", 80), new String[] {"MEOW!", "purr"});
+        JSONObject jsonCat = new JSONObject(cat);
+        String jsonStringCat = jsonCat.toString();
+        System.out.println(jsonStringCat);
+
+        /* Варианты получения json-объектов
+        JSONObject из json-строки
         JSONObject jsonContact = new JSONObject("{\"zipCode\":456789,\"phone\":\"111-11-11\"}");
 
-        /* JSONArray из ArrayList */
+        JSONArray из ArrayList
         List<String> list = new ArrayList<>();
         list.add("Student");
         list.add("Free");
         JSONArray jsonStatuses = new JSONArray(list);
 
-        /* JSONObject напрямую методом put */
+        JSONObject напрямую методом put
         final Person person = new Person(false, 30, new Contact(456789, "222-22-22"), "Worker", "Married");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("sex", person.isSex());
@@ -36,6 +41,7 @@ public class Main {
 
         System.out.println(jsonObject.toString());
         System.out.println(new JSONObject(person).toString());
+        */
 
 
         /* Сериализация в XML
