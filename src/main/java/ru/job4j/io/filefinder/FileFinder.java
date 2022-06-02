@@ -18,13 +18,13 @@ public class FileFinder {
         String name = arguments.get("n");
         Path root = Path.of(arguments.get("d"));
         Predicate<Path> condition;
-        if (type.equals("mask")) {
+        if ("mask".equals(type)) {
             Pattern pattern = Pattern.compile(name.replace('?', '.').replace("*", ".*"));
             condition =  p -> {
                 Matcher matcher = pattern.matcher(p.toFile().getName());
                 return matcher.find();
             };
-        } else if (type.equals("name")) {
+        } else if ("name".equals(type)) {
             condition =  p -> p.toFile().getName().equals(name);
         } else {
             Pattern pattern = Pattern.compile(name);

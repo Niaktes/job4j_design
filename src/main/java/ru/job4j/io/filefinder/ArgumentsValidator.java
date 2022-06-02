@@ -32,13 +32,13 @@ public class ArgumentsValidator {
 
     private static void validateName(String type, String value) {
         Pattern pattern;
-        if (type.equals("mask")) {
+        if ("mask".equals(type)) {
             pattern = Pattern.compile("[^a-zA-Z0-9*.?]");
             Matcher matcher = pattern.matcher(value);
             if (matcher.find()) {
                 throw new IllegalArgumentException("Wrong file mask. Please, use \"-n=*.?xt\" pattern for this argument");
             }
-        } else if (type.equals("name")) {
+        } else if ("name".equals(type)) {
             pattern = Pattern.compile("[^a-zA-Z0-9.]");
             Matcher matcher = pattern.matcher(value);
             if (matcher.find()) {
