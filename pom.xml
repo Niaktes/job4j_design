@@ -125,11 +125,11 @@
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.2.2</version>
           <configuration>
-            <finalName>zip</finalName>
+            <finalName>fileFinder</finalName>
               <archive>
                 <manifest>
                   <addClasspath>true</addClasspath>
-                  <mainClass>ru.job4j.io.duplicates.Zip</mainClass>
+                  <mainClass>ru.job4j.io.filefinder.FileFinder</mainClass>
                 </manifest>
               </archive>
           </configuration>
@@ -148,7 +148,7 @@
                 <goal>shade</goal>
               </goals>
               <configuration>
-                <finalName>zip</finalName>
+                <finalName>fileFinder</finalName>
               </configuration>
             </execution>
           </executions>
