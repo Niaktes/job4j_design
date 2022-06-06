@@ -14,7 +14,7 @@ CREATE TABLE product (
 
 INSERT INTO type (name) VALUES ('Сыр'), ('Колбасы'), ('Молоко'), ('Мясо'), ('Сухофрукты');
 
-INSERT INTO product (name, type_id, expired_date, price) VALUES
+INSERT INTO product (name, type_id, expired_date, price) VALUES 
 ('Гауда', 1, date '2022-07-01', 350),
 ('Эмменталь', 1, date '2022-06-01', 289),
 ('ДорБлю', 1, date '2001-02-21', 999),
@@ -42,7 +42,7 @@ WHERE name LIKE '%мороженое%';
 -- 3. Все продукты, срок годности которых уже истек
 SELECT p.name AS date_expired 
 FROM product AS p 
-WHERE expireed_date < CURRENT_DATE;
+WHERE expired_date < CURRENT_DATE;
 
 -- 4. Самый дорогой продукт
 SELECT p.name AS most_expensive 
@@ -61,8 +61,7 @@ SELECT p.name AS cheese_and_milk, t.name AS type
 FROM product AS p
 JOIN type AS t
 ON p.type_id = t.id
-WHERE type_id = (SELECT id FROM type WHERE name = 'Сыр')
-OR type_id = (SELECT id FROM type WHERE name = 'Молоко');
+WHERE t.name = 'Сыр' OR t.name = 'Молоко';
 
 -- 7. Типы продуктов, которых меньше 3
 SELECT t.name as type 
