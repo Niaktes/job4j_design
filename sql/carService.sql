@@ -20,9 +20,9 @@ CREATE TABLE transmission(
 CREATE TABLE car(
 	id serial primary key,
 	owner varchar(255),
-	body_id int references car_body(id) unique,
-	engine_id int references engine(id) unique,
-	transmission_id int references transmission(id) unique
+	body_id int references car_body(id),
+	engine_id int references engine(id),
+	transmission_id int references transmission(id)
 );
 
 INSERT INTO car_body (model, condition) VALUES
