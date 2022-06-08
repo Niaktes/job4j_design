@@ -3,6 +3,10 @@ package ru.job4j.io;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -47,8 +51,20 @@ public class Config {
 		return out.toString();
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(new Config("app.properties"));
+	public static void main(String[] args) throws ClassNotFoundException {
+		Config conf = new Config("app.properties");
+		conf.load();
+		Class.forName("org.postgresql.Driver");
+		String url = conf.value("url");
+		String login = conf.value("login");
+		String password = conf.value("password");
+		try (Connection connection = DriverManager.getConnection(url, login, password)) {
+			DatabaseMetaData metaData = connection.getMetaData();
+			System.out.println(metaData.getUserName());
+			System.out.println(metaData.getURL());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
