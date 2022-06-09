@@ -1,14 +1,14 @@
 package ru.job4j.jdbc;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class StatementDemo {
 
     public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
-        try (FileInputStream fileInputStream = new FileInputStream("app.properties")) {
-            properties.load(fileInputStream);
+        try (InputStream in = StatementDemo.class.getClassLoader().getResourceAsStream("sql.properties")) {
+            properties.load(in);
         }
         try (TableEditor te = new TableEditor(properties)) {
             String tableName = "test_table";
