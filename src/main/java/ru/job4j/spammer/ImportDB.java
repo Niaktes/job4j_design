@@ -24,6 +24,7 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(line -> {
                 String[] values = line.split(";");
+                argumentsValidation(values);
                 users.add(new User(values[0], values[1]));
             });
         }
@@ -31,7 +32,7 @@ public class ImportDB {
     }
 
     private void save(List<User> users) throws ClassNotFoundException, SQLException {
-        Class.forName(cfg.getProperty("jddc.driver"));
+        Class.forName(cfg.getProperty("jdbc.driver"));
         try (Connection cnt = DriverManager.getConnection(
                 cfg.getProperty("jdbc.url"),
                 cfg.getProperty("jdbc.username"),
@@ -44,6 +45,18 @@ public class ImportDB {
                     ps.execute();
                 }
             }
+        }
+    }
+
+    private void argumentsValidation(String[] values) {
+        if (values.length != 2) {
+            throw new IllegalArgumentException(String.format("There are more than two arguments in line. Check %s", dump));
+        }
+        if (values[0].isBlank()) {
+            throw new IllegalArgumentException("Some email values have no name-pair.");
+        }
+        if (values[1].isBlank()) {
+            throw new IllegalArgumentException("There are no email for some spammers.");
         }
     }
 
